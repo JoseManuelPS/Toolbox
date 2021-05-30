@@ -29,6 +29,41 @@ _Last test info:_
 
 
 
+## random_wallpaper - v1.0
+
+Sets a wallpaper randomly, choosing from all the existing images in a directory and its subdirectories.
+
+Usage:
+```
+random_wallpaper.py [-h] [--time TIME] [--verbose] PATH
+```
+
+- **PATH**: Path to the images directory.
+- **-h**: Show information about help.
+- **--time TIME**: Set the time (in seconds) of each screen background. Default 60s.
+- **--verbose**: Show more information during execution.
+
+Example of use - 1:
+```
+random_wallpaper.py ~/Pictures/wallpapers/
+```
+
+Example of use - 2:
+```
+random_wallpaper.py --time 60 --verbose ~/Pictures/wallpapers/
+```
+
+---
+
+_Last test info:_
+
+- _Date: 30/05/2021_
+- _Python versión: alpine:3.8.5_
+
+---
+
+
+
 ## templates - v1.0
 
 Base templates for creating scripts on Python and Shell.
