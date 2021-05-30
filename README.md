@@ -4,16 +4,20 @@ Multiple scripts for all kinds of problems.
 
 
 
-## 3n1gm4 - v1.0
+## 3n1gm4 - v1.1
 
 Create a secret box to store a key. 
 
-Recommended usage instrucction:
+Usage:
 ```
-3n1gm4.py [-h] rows columns
+3n1gm4.py [-h] ROWS COLUMNS
 ```
 
-Example usage instrucction:
+- **ROWS**: Type number of rows.
+- **COLUMNS**: Type number of columns.
+- **-h**: Show information about help.
+
+Example of use:
 ```
 3n1gm4.py 100 100
 ```
