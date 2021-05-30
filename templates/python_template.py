@@ -25,9 +25,9 @@ import <(import_name)>
 ###############################################################################
 
 parser = argparse.ArgumentParser(description = '<(script_description)>')
-parser.add_argument('<(arg)>', type = bool, help = '<(arg_description)>')
-parser.add_argument('<(arg)>', type = int, help = '<(arg_description)>')
-parser.add_argument('<(arg)>', type = str, help = '<(arg_description)>')
+parser.add_argument('<(arg)>', metavar = '<(ARG)>', type = bool, help = '<(arg_description)>')
+parser.add_argument('<(arg)>', metavar = '<(ARG)>', type = int, help = '<(arg_description)>')
+parser.add_argument('<(arg)>', metavar = '<(ARG)>', type = str, help = '<(arg_description)>')
 parser.add_argument('--<(arg)>', type = bool, help = '<(arg_description)>', default = <(True or False)>)
 parser.add_argument('--<(arg)>', type = int, help = '<(arg_description)>', default = <(some_number)>)
 parser.add_argument('--<(arg)>', type = str, help = '<(arg_description)>', default = '<(some_text)>')

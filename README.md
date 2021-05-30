@@ -64,7 +64,7 @@ _Last test info:_
 
 
 
-## templates - v1.0
+## templates - v1.1
 
 Base templates for creating scripts on Python and Shell.
 
