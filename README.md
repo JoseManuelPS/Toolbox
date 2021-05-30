@@ -33,6 +33,40 @@ _Last test info:_
 
 
 
+## custom_youtube-dl - v1.0
+
+Assistant to use the youtube-dl tool.
+
+Usage:
+```
+custom_youtube-dl.py [-h] [--name NAME] PATH
+```
+
+- **PATH**: Set the path to the directory where the download is saved.
+- **-h**: Show information about help.
+- **--name NAME**: Set the name under which the download is saved.
+
+Example of use - 1:
+```
+custom_youtube.py ~/Downloads/
+```
+
+Example of use - 2:
+```
+custom_youtube.py --name List ~/Downloads/
+```
+
+---
+
+_Last test info:_
+
+- _Date: 30/05/2021_
+- _Python versión: alpine:3.8.5_
+
+---
+
+
+
 ## random_wallpaper - v1.0
 
 Sets a wallpaper randomly, choosing from all the existing images in a directory and its subdirectories.
