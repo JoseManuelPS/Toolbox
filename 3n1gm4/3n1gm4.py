@@ -26,8 +26,8 @@ import string
 ###############################################################################
 
 parser = argparse.ArgumentParser(description = 'Create a secret box to store a key.')
-parser.add_argument('rows', type = int, help = 'Type number of rows')
-parser.add_argument('columns', type = int, help = 'Type number of columns')
+parser.add_argument('rows', metavar = 'ROWS', type = int, help = 'Type number of rows.')
+parser.add_argument('columns', metavar = 'COLUMNS', type = int, help = 'Type number of columns.')
 args = parser.parse_args()
 
 
