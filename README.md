@@ -33,7 +33,7 @@ _Last test info:_
 
 
 
-## custom_youtube-dl - v1.0
+## custom_youtube-dl - v1.1
 
 Assistant to use the youtube-dl tool.
 
@@ -60,7 +60,7 @@ custom_youtube.py --name List ~/Downloads/
 
 _Last test info:_
 
-- _Date: 30/05/2021_
+- _Date: 02/06/2021_
 - _Python versión: alpine:3.8.5_
 
 ---
