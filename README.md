@@ -107,3 +107,43 @@ _Last test info:_
 Base templates for creating scripts on Python and Shell.
 
 
+
+## text_utils/scripts_processor - v1.0
+
+Simple application for code processing in shell scripts.
+
+Usage:
+```
+scripts_processor.py [-h] [--advanced_on] [--advanced_off] [--verbose_on] [--verbose_off] [--verbose] PATH
+```
+
+- **PATH**: Path to the images directory.
+- **-h**: Show information about help.
+- **--advanced_on**: Turn on advanced mode.
+- **--advanced_off**: Turn off advanced mode.
+- **--verbose_on**: Turn on verbose mode.
+- **--verbose_off**: Turn off verbose mode.
+- **--verbose**: Show more information during execution.      
+
+Example of use - 1:
+```
+scripts_processor.py --verbose_on ~/tmp/file.sh
+```
+
+Example of use - 2:
+```
+scripts_processor.py --verbose_on --advanced_off ~/tmp/file.sh
+```
+
+---
+
+_Last test info:_
+
+- _Date: 03/06/2021_
+- _Python versión: alpine:3.8.5_
+
+---
+
+
+
+
