@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 ##        Name: custom_youtube-dl.py                                          #
-##        Date: 30/05/2021                                                    #
+##        Date: 02/06/2021                                                    #
 ## Description: Assistant to use the youtube-dl tool.                         #
 ##----------------------------------------------------------------------------#
 ##      Editor: José Manuel Plana Santos                                      #
@@ -64,7 +64,7 @@ if args.name is not None:
   episode_list = []
   for x in listdir(args.path):
     if path.isfile(args.path + x):
-      regular_expression = re.search('(?<=' + args.name + ')\\w+', x)
+      regular_expression = re.search('(?<=' + args.name + '_)\\w+', x)
       if regular_expression is not None:
         number_of_episode = regular_expression.group(0)
         episode_list.append(int(number_of_episode))
@@ -82,15 +82,21 @@ while 1:
 
   if args.name is not None:
     episode_num += 1
-    print('Downloading as: ' + args.name + "_" + str(episode_num))
-    full_name = args.path + args.name + "_" + str(episode_num) + '.%(ext)s'
+    episode_num_str = str(episode_num)
+
+    if episode_num < 10:
+      episode_num_str = '0' + episode_num_str
+
+    full_name = args.path + args.name + "_" + episode_num_str + '.%(ext)s'
 
   # Executing youtube-dl
   if not args.name:
     p = subprocess.Popen(['youtube-dl', url])
     p.wait()
+    print('\n\nDownload complete!')
   else:
     p = subprocess.Popen(['youtube-dl', '-o', full_name, url])
     p.wait()
+    print('\n\n' + args.name + "_" + episode_num_str + ' download complete!')
 
 
