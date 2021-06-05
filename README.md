@@ -108,6 +108,42 @@ Base templates for creating scripts on Python and Shell.
 
 
 
+## text_utils/rebuild_line - v1.0
+
+The program reads one by one each of the lines of a file, if in any line it finds a match with the text entered as **old**, it replaces it with the text entered as **new**.
+
+Usage:
+```
+rebuild_line.py [-h] [--new NEW] [--old OLD] [--replace] [--verbose] PATH
+```
+
+- **PATH**: Path to the folder or the file to process.
+- **-h**: Show information about help.
+- **--new**: The NEW text that you want to replace.
+- **--old**: The OLD text that you want to replace.
+- **--replace**: Replace the original file with the new content.
+- **--verbose**: Show more information during execution.      
+
+Example of use - 1:
+```
+rebuild_line.py ~/tmp/file.sh
+```
+
+Example of use - 2:
+```
+rebuild_line.py --verbose --replace --new something_new --old something_old ~/tmp/app
+```
+
+---
+
+_Last test info:_
+
+- _Date: 05/06/2021_
+- _Python versión: alpine:3.8.5_
+
+---
+
+
 ## text_utils/scripts_processor - v1.0
 
 Simple application for code processing in shell scripts.
@@ -117,7 +153,7 @@ Usage:
 scripts_processor.py [-h] [--advanced_on] [--advanced_off] [--verbose_on] [--verbose_off] [--verbose] PATH
 ```
 
-- **PATH**: Path to the images directory.
+- **PATH**: Path to shell script.
 - **-h**: Show information about help.
 - **--advanced_on**: Turn on advanced mode.
 - **--advanced_off**: Turn off advanced mode.
@@ -143,7 +179,5 @@ _Last test info:_
 - _Python versión: alpine:3.8.5_
 
 ---
-
-
 
 
