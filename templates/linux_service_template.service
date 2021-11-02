@@ -1,0 +1,11 @@
+[Unit]
+Description=<(Some description about this service)>
+
+[Service]
+User=<(Username of the system that should run the service)>
+WorkingDirectory=<(Working directory, if needed)>
+ExecStart=<(Command or script with service functionality)>
+Restart=<(Restart type, no, always, etc.)>
+
+[Install]
+WantedBy=<(Target dependency)>
