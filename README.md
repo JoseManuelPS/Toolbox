@@ -104,7 +104,7 @@ _Last test info:_
 
 ## templates - v1.1
 
-Base templates for creating scripts on Python and Shell.
+Base templates for creating scripts for Python, Shell and Linux Services.
 
 
 
