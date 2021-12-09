@@ -1,7 +1,7 @@
 #!/bin/bash
 ###############################################################################
 ##        Name: oh-my-custom-zsh.sh                                           #
-##        Date: 08/12/2021                                                    #
+##        Date: 09/12/2021                                                    #
 ## Description: Custom configuration of oh-my-zsh.                            #
 ##----------------------------------------------------------------------------#
 ##      Editor: José Manuel Plana Santos                                      #
@@ -12,7 +12,7 @@
 
 # Script information.
 scriptName="oh-my-custom-zsh"
-scriptVersion="b1.1"
+scriptVersion="b1.2"
 
 # Script directories.
 scriptPath=$(cd $(dirname $0) ; pwd -P)/
@@ -77,8 +77,12 @@ OhMyZsh () {
 
 OhMyZsh-Config () {
 
+  aliasFile="/tmp/.oh-my-custom-zsh.alias"
+  if [ -f $aliasFile ]; then
+    rm -f $aliasFile
+  fi
+
   plugins="git"
-  alias=""
 
   read -p "Do you want to install powerlevel10k theme? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
@@ -114,23 +118,21 @@ OhMyZsh-Config () {
   if [ "$selectedOption" == "y" ]; then
     git clone https://github.com/supercrabtree/k $ZSH_CUSTOM/plugins/k; sed -i 's/^k[[:space:]]/z /g' ${ZSH_CUSTOM}/plugins/k/k.sh
     plugins=$plugins" k"
-    alias=$alias"alias f=\"z -ha\"\n"
+    echo "alias f=\"z -ha\"" >> $aliasFile
   fi
-
-  echo -e $alias
 
   read -p "Do you want to install custom kubectl plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     plugins=$plugins" kubectl"
-    alias=$alias"alias k=\"kubectl\"\n"
-    alias=$alias"alias ka=\"kubectl apply\"\n"
-    alias=$alias"alias kd=\"kubectl describe\"\n"
-    alias=$alias"alias ke=\"kubectl exec\"\n"
-    alias=$alias"alias kg=\"kubectl get\"\n"
-    alias=$alias"alias kga=\"kubectl get all\"\n"
-    alias=$alias"alias kl=\"kubectl logs\"\n"
-    alias=$alias"alias kr=\"kubectl run\"\n"
-    alias=$alias"alias krm=\"kubectl delete\"\n"
+    echo "alias k=\"kubectl\"" >> $aliasFile
+    echo "alias ka=\"kubectl apply\"" >> $aliasFile
+    echo "alias kd=\"kubectl describe\"" >> $aliasFile
+    echo "alias ke=\"kubectl exec\"" >> $aliasFile
+    echo "alias kg=\"kubectl get\"" >> $aliasFile
+    echo "alias kga=\"kubectl get all\"" >> $aliasFile
+    echo "alias kl=\"kubectl logs\"" >> $aliasFile
+    echo "alias kr=\"kubectl run\"" >> $aliasFile
+    echo "alias krm=\"kubectl delete\"" >> $aliasFile
   fi
 
   echo -e $alias
@@ -143,12 +145,15 @@ OhMyZsh-Config () {
   read -p "Do you want to install custom docker plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     plugins=$plugins" docker"
-    alias=$alias"alias d=\"docker\"\n"
+    echo "alias d=\"docker\"" >> $aliasFile
   fi
 
-  echo -e $alias
   sed -i "s|plugins.*|plugins=($plugins)|" $execUser_Home/.zshrc
-  echo -e $alias >> $execUser_Home/.zshrc
+
+  cat $aliasFile >> $execUser_Home/.zshrc
+  if [ -f $aliasFile ]; then
+    rm -f $aliasFile
+  fi
 }
 
 
