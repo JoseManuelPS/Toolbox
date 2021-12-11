@@ -123,7 +123,7 @@ _Last test info:_
 
 
 
-## templates - v1.1
+## templates - v1.3
 
 Base templates for creating scripts for Python, Shell and Linux Services.
 

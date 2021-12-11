@@ -28,12 +28,26 @@ title="Loading $scriptName $scriptVersion...\n\n"
 # Package-manager.
 installerMedia="<(package_manager)>"
 
+# OR
+
+# Checking binary of Package-Manager.
+checkBinary=$(which apt | wc -l)
+if [ $(which apt | wc -l) -eq 1 ]; then
+  installerMedia="sudo apt"
+elif [ $(which dnf | wc -l) -eq 1 ]; then
+  installerMedia="sudo dnf"
+elif [ $(which yum | wc -l) -eq 1 ]; then
+  installerMedia="sudo yum"
+fi
+
 # User information.
-logUser=$(logname)
-if ["$logUser" == "root"]; then
-  logUser_Home="/root/"
-else
-  logUser_Home="/home/$logUser/"
+if [ $(which logname | wc -l) -eq 1 ]; then
+  logUser=$(logname)
+  if ["$logUser" == "root"]; then
+    logUser_Home="/root/"
+  else
+    logUser_Home="/home/$logUser/"
+  fi
 fi
 execUser=$(whoami)
 execUser_Home="$(echo $HOME)"
@@ -103,12 +117,13 @@ Main () {
 # Process interrupt or <(CTRL + C)> combination captured.
 Catch () {
 
+  clear -x
+
   if ["$errors" != ""]; then
-    echo -e $errors
+    echo -e "[ERROR LOG]\n\n$errors"
     exit 1
   fi
 
-  clear -x
   echo "The script $scriptName has been forced to close..."
   exit 1
 }
@@ -117,7 +132,7 @@ Catch () {
 Check_Root () {
 
   if ["$execUser" != "root"]; then
-    error=$error$tab"The $scriptName must be run as root, please try again.\n"
+    errors=$errors$tab"The $scriptName must be run as root, please try again.\n"
     Catch
   fi
 }
@@ -132,7 +147,7 @@ Check_Dependencies () {
   if [$checkBinary -eq 0]; then
     <(command_to_resolve_this_dependency)>
     # or
-    error=$error$tab"<(actions_to_resolve_this_dependency)>.\n"
+    errors=$errors$tab"<(actions_to_resolve_this_dependency)>.\n"
     Catch
   fi
 }
@@ -194,6 +209,15 @@ Print_DMenu () {
     fi
   done
 }
+
+# Print [Y/n] selecction
+Print_Yn_Selection () {
+  read -p "Do you want to ...? [y/n]: " selectedOption
+  if [ "$selectedOption" == "y" ]; then
+    echo "Custom command"
+  fi
+}
+
 
 
 
