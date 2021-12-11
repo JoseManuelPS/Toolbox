@@ -67,6 +67,27 @@ _Last test info:_
 
 
 
+## oh-my-cfg/zsh - v1.0
+
+Script to install a custom zsh shell.
+
+Usage:
+```
+oh-my-custom-zsh.sh
+```
+
+---
+
+_Last test info:_
+
+- _Date: 11/12/2021_
+- _ZSH: zsh:5.8_
+- _p10k: v1.15.0_
+
+---
+
+
+
 ## random_wallpaper - v1.0
 
 Sets a wallpaper randomly, choosing from all the existing images in a directory and its subdirectories.

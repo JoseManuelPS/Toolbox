@@ -1,7 +1,7 @@
 #!/bin/bash
 ###############################################################################
 ##        Name: oh-my-custom-zsh.sh                                           #
-##        Date: 09/12/2021                                                    #
+##        Date: 11/12/2021                                                    #
 ## Description: Custom configuration of oh-my-zsh.                            #
 ##----------------------------------------------------------------------------#
 ##      Editor: José Manuel Plana Santos                                      #
@@ -12,7 +12,7 @@
 
 # Script information.
 scriptName="oh-my-custom-zsh"
-scriptVersion="b1.2"
+scriptVersion="v1.0"
 
 # Script directories.
 scriptPath=$(cd $(dirname $0) ; pwd -P)/
@@ -135,8 +135,6 @@ OhMyZsh-Config () {
     echo "alias krm=\"kubectl delete\"" >> $aliasFile
   fi
 
-  echo -e $alias
-
   read -p "Do you want to install custom minikube plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     plugins=$plugins" minikube"
@@ -154,6 +152,9 @@ OhMyZsh-Config () {
   if [ -f $aliasFile ]; then
     rm -f $aliasFile
   fi
+
+  echo "# To customize prompt, run \'p10k configure\' or edit ~/.p10k.zsh." >> $execUser_Home/.zshrc
+  echo "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" >> $execUser_Home/.zshrc
 }
 
 
@@ -203,6 +204,7 @@ Check_Dependencies () {
 
     echo "Trying to install zsh..."
     $installerMedia -y install zsh
+    echo "Configuring zsh as default shell..."
     chsh -s $(which zsh)
 
     checkBinary=$(which zsh | wc -l)
