@@ -1,7 +1,7 @@
 #!/bin/bash
 ###############################################################################
 ##        Name: oh-my-custom-zsh.sh                                           #
-##        Date: 11/12/2021                                                    #
+##        Date: 07/05/2022                                                    #
 ## Description: Custom configuration of oh-my-zsh.                            #
 ##----------------------------------------------------------------------------#
 ##      Editor: José Manuel Plana Santos                                      #
@@ -12,7 +12,7 @@
 
 # Script information.
 scriptName="oh-my-custom-zsh"
-scriptVersion="v1.0"
+scriptVersion="v1.1"
 
 # Script directories.
 scriptPath=$(cd $(dirname $0) ; pwd -P)/
@@ -59,7 +59,7 @@ Main () {
   # Installing oh-my-zsh
   OhMyZsh
 
-  # Installing oh-my-zsh
+  # Configuring oh-my-zsh
   OhMyZsh-Config
 
   if [ "$errors" != "" ]; then
@@ -84,66 +84,56 @@ OhMyZsh-Config () {
 
   plugins="git"
 
-  read -p "Do you want to install powerlevel10k theme? [y/n]: " selectedOption
+  echo ""; read -p "Do you want to install powerlevel10k theme? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
     
-    read -p "Do you want to load custom powerlevel10k theme? [y/n]: " selectedOption
+    echo ""; read -p "Do you want to load custom powerlevel10k theme? [y/n]: " selectedOption
     if [ "$selectedOption" == "y" ]; then
       cp ./.p10k.zsh $execUser_Home
       sed -i 's|ZSH_THEME.*|ZSH_THEME=\"powerlevel10k/powerlevel10k\"|' $execUser_Home/.zshrc
     fi
   fi
 
-  read -p "Do you want to install zsh-syntax-highlighting plugin? [y/n]: " selectedOption
+  echo ""; read -p "Do you want to install zsh-syntax-highlighting plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
     plugins=$plugins" zsh-syntax-highlighting"
   fi
 
-  read -p "Do you want to install zsh-completions plugin? [y/n]: " selectedOption
+  echo ""; read -p "Do you want to install zsh-completions plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     git clone https://github.com/zsh-users/zsh-completions $ZSH_CUSTOM/plugins/zsh-completions
     plugins=$plugins" zsh-completions"
   fi
 
-  read -p "Do you want to install zsh-autosuggestions plugin? [y/n]: " selectedOption
+  echo ""; read -p "Do you want to install zsh-autosuggestions plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
     plugins=$plugins" zsh-autosuggestions"
   fi
 
-  read -p "Do you want to install custom k => z plugin? [y/n]: " selectedOption
+  echo ""; read -p "Do you want to install custom k => z plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     git clone https://github.com/supercrabtree/k $ZSH_CUSTOM/plugins/k; sed -i 's/^k[[:space:]]/z /g' ${ZSH_CUSTOM}/plugins/k/k.sh
     plugins=$plugins" k"
     echo "alias f=\"z -ha\"" >> $aliasFile
   fi
 
-  read -p "Do you want to install custom kubectl plugin? [y/n]: " selectedOption
+  echo ""; read -p "Do you want to install custom kubectl plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     plugins=$plugins" kubectl"
-    echo "alias k=\"kubectl\"" >> $aliasFile
-    echo "alias ka=\"kubectl apply\"" >> $aliasFile
-    echo "alias kd=\"kubectl describe\"" >> $aliasFile
-    echo "alias ke=\"kubectl exec\"" >> $aliasFile
-    echo "alias kg=\"kubectl get\"" >> $aliasFile
-    echo "alias kga=\"kubectl get all\"" >> $aliasFile
-    echo "alias kl=\"kubectl logs\"" >> $aliasFile
-    echo "alias kr=\"kubectl run\"" >> $aliasFile
-    echo "alias krm=\"kubectl delete\"" >> $aliasFile
   fi
 
-  read -p "Do you want to install custom minikube plugin? [y/n]: " selectedOption
+  echo ""; read -p "Do you want to install custom minikube plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     plugins=$plugins" minikube"
   fi
 
-  read -p "Do you want to install custom docker plugin? [y/n]: " selectedOption
+  echo ""; read -p "Do you want to install custom docker plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     plugins=$plugins" docker"
-    echo "alias d=\"docker\"" >> $aliasFile
   fi
 
   sed -i "s|plugins.*|plugins=($plugins)|" $execUser_Home/.zshrc
@@ -180,6 +170,7 @@ Catch () {
 # Checking script dependencies.
 Check_Dependencies () {
 
+  ## GIT ##
   # Checking binary of the git dependency.
   checkBinary=$(which git | wc -l)
 
@@ -196,6 +187,7 @@ Check_Dependencies () {
     fi
   fi
 
+  ## ZSH ##
   # Checking binary of the zsh dependency.
   checkBinary=$(which zsh | wc -l)
 
@@ -214,6 +206,7 @@ Check_Dependencies () {
     fi
   fi
 
+  ## CURL ##
   # Checking binary of the curl dependency.
   checkBinary=$(which curl | wc -l)
 
