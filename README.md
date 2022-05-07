@@ -67,7 +67,7 @@ _Last test info:_
 
 
 
-## oh-my-cfg/zsh - v1.0
+## oh-my-cfg/zsh - v1.1
 
 Script to install a custom zsh shell.
 
@@ -80,9 +80,9 @@ oh-my-custom-zsh.sh
 
 _Last test info:_
 
-- _Date: 11/12/2021_
+- _Date: 07/05/2022_
 - _ZSH: zsh:5.8_
-- _p10k: v1.15.0_
+- _p10k: v1.16.1_
 
 ---
 
