@@ -1,7 +1,7 @@
 #!/bin/bash
 ###############################################################################
 ##        Name: oh-my-custom-zsh.sh                                           #
-##        Date: 07/05/2022                                                    #
+##        Date: 04/10/2022                                                    #
 ## Description: Custom configuration of oh-my-zsh.                            #
 ##----------------------------------------------------------------------------#
 ##      Editor: José Manuel Plana Santos                                      #
@@ -12,7 +12,7 @@
 
 # Script information.
 scriptName="oh-my-custom-zsh"
-scriptVersion="v1.1"
+scriptVersion="v1.2"
 
 # Script directories.
 scriptPath=$(cd $(dirname $0) ; pwd -P)/
@@ -84,36 +84,40 @@ OhMyZsh-Config () {
 
   plugins="git"
 
+
+  echo -e "\n---\nTheme selector:"
+
+  # PowerLevel10K
   echo ""; read -p "Do you want to install powerlevel10k theme? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
-    
+
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
-    
+
     echo ""; read -p "Do you want to load custom powerlevel10k theme? [y/n]: " selectedOption
     if [ "$selectedOption" == "y" ]; then
       cp ./.p10k.zsh $execUser_Home
       sed -i 's|ZSH_THEME.*|ZSH_THEME=\"powerlevel10k/powerlevel10k\"|' $execUser_Home/.zshrc
+      echo "# To customize prompt, run \'p10k configure\' or edit ~/.p10k.zsh." >> $execUser_Home/.zshrc
+      echo "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" >> $execUser_Home/.zshrc
     fi
   fi
 
-  echo ""; read -p "Do you want to install zsh-syntax-highlighting plugin? [y/n]: " selectedOption
+
+  echo -e "\n--- Plugin & Autocomplete selector:"
+
+  # Docker
+  echo ""; read -p "Do you want to install docker plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
-    plugins=$plugins" zsh-syntax-highlighting"
+    plugins=$plugins" docker"
   fi
 
-  echo ""; read -p "Do you want to install zsh-completions plugin? [y/n]: " selectedOption
+  # Helm
+  echo ""; read -p "Do you want to autocomplete helm command? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
-    git clone https://github.com/zsh-users/zsh-completions $ZSH_CUSTOM/plugins/zsh-completions
-    plugins=$plugins" zsh-completions"
+    echo "source <(helm completion zsh)" >> ~/.zshrc
   fi
 
-  echo ""; read -p "Do you want to install zsh-autosuggestions plugin? [y/n]: " selectedOption
-  if [ "$selectedOption" == "y" ]; then
-    git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
-    plugins=$plugins" zsh-autosuggestions"
-  fi
-
+  # K
   echo ""; read -p "Do you want to install custom k => z plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     git clone https://github.com/supercrabtree/k $ZSH_CUSTOM/plugins/k; sed -i 's/^k[[:space:]]/z /g' ${ZSH_CUSTOM}/plugins/k/k.sh
@@ -121,19 +125,43 @@ OhMyZsh-Config () {
     echo "alias f=\"z -ha\"" >> $aliasFile
   fi
 
-  echo ""; read -p "Do you want to install custom kubectl plugin? [y/n]: " selectedOption
+  # Kubectl
+  echo ""; read -p "Do you want to install kubectl plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     plugins=$plugins" kubectl"
   fi
 
-  echo ""; read -p "Do you want to install custom minikube plugin? [y/n]: " selectedOption
+  # Minikube
+  echo ""; read -p "Do you want to install minikube plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     plugins=$plugins" minikube"
   fi
 
-  echo ""; read -p "Do you want to install custom docker plugin? [y/n]: " selectedOption
+  # Oc
+  echo ""; read -p "Do you want to install oc plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
-    plugins=$plugins" docker"
+    plugins=$plugins" oc"
+  fi
+
+  # zsh-autosuggestions
+  echo ""; read -p "Do you want to install zsh-autosuggestions plugin? [y/n]: " selectedOption
+  if [ "$selectedOption" == "y" ]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+    plugins=$plugins" zsh-autosuggestions"
+  fi
+
+  # zsh-completions
+  echo ""; read -p "Do you want to install zsh-completions plugin? [y/n]: " selectedOption
+  if [ "$selectedOption" == "y" ]; then
+    git clone https://github.com/zsh-users/zsh-completions $ZSH_CUSTOM/plugins/zsh-completions
+    plugins=$plugins" zsh-completions"
+  fi
+
+  # zsh-syntax-highlighthing
+  echo ""; read -p "Do you want to install zsh-syntax-highlighting plugin? [y/n]: " selectedOption
+  if [ "$selectedOption" == "y" ]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+    plugins=$plugins" zsh-syntax-highlighting"
   fi
 
   sed -i "s|plugins.*|plugins=($plugins)|" $execUser_Home/.zshrc
@@ -142,9 +170,6 @@ OhMyZsh-Config () {
   if [ -f $aliasFile ]; then
     rm -f $aliasFile
   fi
-
-  echo "# To customize prompt, run \'p10k configure\' or edit ~/.p10k.zsh." >> $execUser_Home/.zshrc
-  echo "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" >> $execUser_Home/.zshrc
 }
 
 
