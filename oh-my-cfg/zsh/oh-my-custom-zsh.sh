@@ -1,7 +1,7 @@
 #!/bin/bash
 ###############################################################################
 ##        Name: oh-my-custom-zsh.sh                                           #
-##        Date: 04/10/2022                                                    #
+##        Date: 28/12/2022                                                    #
 ## Description: Custom configuration of oh-my-zsh.                            #
 ##----------------------------------------------------------------------------#
 ##      Editor: José Manuel Plana Santos                                      #
@@ -12,7 +12,7 @@
 
 # Script information.
 scriptName="oh-my-custom-zsh"
-scriptVersion="v1.2"
+scriptVersion="v1.3"
 
 # Script directories.
 scriptPath=$(cd $(dirname $0) ; pwd -P)/
@@ -81,7 +81,6 @@ OhMyZsh-Config () {
   if [ -f $aliasFile ]; then
     rm -f $aliasFile
   fi
-
   plugins="git"
 
 
@@ -114,7 +113,7 @@ OhMyZsh-Config () {
   # Helm
   echo ""; read -p "Do you want to autocomplete helm command? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
-    echo "source <(helm completion zsh)" >> ~/.zshrc
+    echo "source <(helm completion zsh); compdef _helm helm" >> ~/.zshrc
   fi
 
   # K
@@ -128,19 +127,25 @@ OhMyZsh-Config () {
   # Kubectl
   echo ""; read -p "Do you want to install kubectl plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
-    plugins=$plugins" kubectl"
+    echo "source <(kubectl completion zsh); compdef _kubectl kubectl" >> ~/.zshrc
   fi
 
   # Minikube
   echo ""; read -p "Do you want to install minikube plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
-    plugins=$plugins" minikube"
+    echo "source <(minikube completion zsh); compdef _minikube minikube" >> ~/.zshrc
   fi
 
   # Oc
   echo ""; read -p "Do you want to install oc plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
-    plugins=$plugins" oc"
+    echo "source <(oc completion zsh); compdef _oc oc" >> ~/.zshrc
+  fi
+
+  # Tridentctl
+  echo ""; read -p "Do you want to autocomplete tridentctl command? [y/n]: " selectedOption
+  if [ "$selectedOption" == "y" ]; then
+    echo "source <(tridentctl completion zsh); compdef _tridentctl tridentctl" >> ~/.zshrc
   fi
 
   # zsh-autosuggestions
@@ -164,10 +169,12 @@ OhMyZsh-Config () {
     plugins=$plugins" zsh-syntax-highlighting"
   fi
 
-  sed -i "s|plugins.*|plugins=($plugins)|" $execUser_Home/.zshrc
+  if [ "$plugins" != "git" ]; then
+    sed -i "s|plugins.*|plugins=($plugins)|" $execUser_Home/.zshrc
+  fi
 
-  cat $aliasFile >> $execUser_Home/.zshrc
   if [ -f $aliasFile ]; then
+    cat $aliasFile >> $execUser_Home/.zshrc
     rm -f $aliasFile
   fi
 }
@@ -212,7 +219,7 @@ Check_Dependencies () {
     fi
   fi
 
-  ## ZSH ##
+  ## Zsh ##
   # Checking binary of the zsh dependency.
   checkBinary=$(which zsh | wc -l)
 
@@ -231,7 +238,7 @@ Check_Dependencies () {
     fi
   fi
 
-  ## CURL ##
+  ## Curl ##
   # Checking binary of the curl dependency.
   checkBinary=$(which curl | wc -l)
 
