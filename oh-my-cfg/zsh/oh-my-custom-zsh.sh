@@ -127,7 +127,8 @@ OhMyZsh-Config () {
   # Kubectl
   echo ""; read -p "Do you want to install kubectl plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
-    echo "source <(kubectl completion zsh); compdef _kubectl kubectl" >> ~/.zshrc
+    echo "source <(kubectl completion zsh); compdef _kubectl kubectl; compdef __start_kubectl k" >> ~/.zshrc
+    echo "alias k=kubectl" >> $aliasFile
   fi
 
   # Minikube
