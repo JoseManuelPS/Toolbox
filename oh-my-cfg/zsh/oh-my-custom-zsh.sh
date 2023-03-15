@@ -110,6 +110,14 @@ OhMyZsh-Config () {
     plugins=$plugins" docker"
   fi
 
+  # fzf
+  echo ""; read -p "Do you want to install fzf plugin? [y/n]: " selectedOption
+  if [ "$selectedOption" == "y" ]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install
+    plugins=$plugins" fzf"
+  fi
+
   # Helm
   echo ""; read -p "Do you want to autocomplete helm command? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
@@ -127,8 +135,19 @@ OhMyZsh-Config () {
   # Kubectl
   echo ""; read -p "Do you want to install kubectl plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
-    echo "source <(kubectl completion zsh); compdef _kubectl kubectl; compdef __start_kubectl k" >> ~/.zshrc
+    echo "source <(kubectl completion zsh); compdef _kubectl kubectl" >> ~/.zshrc
+    echo "compdef __start_kubectl k" >> ~/.zshrc
     echo "alias k=kubectl" >> $aliasFile
+    echo "compdef __start_kubectl kc" >> ~/.zshrc
+    echo "alias kc=\"kubectl create --save-config\"" >> $aliasFile
+    echo "compdef __start_kubectl kd" >> ~/.zshrc
+    echo "alias kd=\"kubectl describe\"" >> $aliasFile
+    echo "compdef __start_kubectl ke" >> ~/.zshrc
+    echo "alias ke=\"kubectl exec -ti\"" >> $aliasFile
+    echo "compdef __start_kubectl kg" >> ~/.zshrc
+    echo "alias kg=\"kubectl get\"" >> $aliasFile
+    echo "compdef __start_kubectl kl" >> ~/.zshrc
+    echo "alias kl=\"kubectl logs\"" >> $aliasFile
   fi
 
   # Minikube
