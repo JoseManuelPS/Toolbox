@@ -1,7 +1,7 @@
 #!/bin/bash
 ###############################################################################
 ##        Name: oh-my-custom-zsh.sh                                           #
-##        Date: 28/12/2022                                                    #
+##        Date: 13/05/2023                                                    #
 ## Description: Custom configuration of oh-my-zsh.                            #
 ##----------------------------------------------------------------------------#
 ##      Editor: José Manuel Plana Santos                                      #
@@ -12,7 +12,7 @@
 
 # Script information.
 scriptName="oh-my-custom-zsh"
-scriptVersion="v1.3"
+scriptVersion="v1.5"
 
 # Script directories.
 scriptPath=$(cd $(dirname $0) ; pwd -P)/
@@ -20,7 +20,7 @@ srcPath=$scriptPath"src/"
 
 # Common strings.
 tab="--> "
-title="Loading $scriptName $scriptVersion...\n\n"
+title="Loading $scriptName $scriptVersion..."
 
 # Checking binary of package manager.
 checkBinary=$(which apt | wc -l)
@@ -71,11 +71,15 @@ Main () {
 
 OhMyZsh () {
 
+  echo -e "\n---\nInstalling Oh My Zsh...\n"
+
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
   ZSH_CUSTOM=$execUser_Home'/.oh-my-zsh/custom'
 }
 
 OhMyZsh-Config () {
+
+  echo -e "\n---\nCustomizing Oh My Zsh..."
 
   aliasFile="/tmp/.oh-my-custom-zsh.alias"
   if [ -f $aliasFile ]; then
@@ -84,7 +88,7 @@ OhMyZsh-Config () {
   plugins="git"
 
 
-  echo -e "\n---\nTheme selector:"
+  echo -e "\n### Theme selector:"
 
   # PowerLevel10K
   echo ""; read -p "Do you want to install powerlevel10k theme? [y/n]: " selectedOption
@@ -102,7 +106,7 @@ OhMyZsh-Config () {
   fi
 
 
-  echo -e "\n--- Plugin & Autocomplete selector:"
+  echo -e "\n### Plugins & Autocompletes selector:"
 
   # Docker
   echo ""; read -p "Do you want to install docker plugin? [y/n]: " selectedOption
@@ -115,7 +119,6 @@ OhMyZsh-Config () {
   if [ "$selectedOption" == "y" ]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install
-    plugins=$plugins" fzf"
   fi
 
   # Helm
@@ -221,6 +224,8 @@ Catch () {
 
 # Checking script dependencies.
 Check_Dependencies () {
+
+  echo -e "\n---\nChecking dependencies..."
 
   ## GIT ##
   # Checking binary of the git dependency.
