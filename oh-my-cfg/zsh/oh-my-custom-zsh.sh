@@ -1,7 +1,7 @@
 #!/bin/bash
 ###############################################################################
 ##        Name: oh-my-custom-zsh.sh                                           #
-##        Date: 13/05/2023                                                    #
+##        Date: 28/05/2023                                                    #
 ## Description: Custom configuration of oh-my-zsh.                            #
 ##----------------------------------------------------------------------------#
 ##      Editor: José Manuel Plana Santos                                      #
@@ -12,7 +12,7 @@
 
 # Script information.
 scriptName="oh-my-custom-zsh"
-scriptVersion="v1.5"
+scriptVersion="v1.6"
 
 # Script directories.
 scriptPath=$(cd $(dirname $0) ; pwd -P)/
@@ -109,12 +109,12 @@ OhMyZsh-Config () {
   echo -e "\n### Plugins & Autocompletes selector:"
 
   # Docker
-  echo ""; read -p "Do you want to install docker plugin? [y/n]: " selectedOption
+  echo ""; read -p "Do you want to add docker plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     plugins=$plugins" docker"
   fi
 
-  # fzf
+  # FZF
   echo ""; read -p "Do you want to install fzf plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
@@ -122,7 +122,7 @@ OhMyZsh-Config () {
   fi
 
   # Helm
-  echo ""; read -p "Do you want to autocomplete helm command? [y/n]: " selectedOption
+  echo ""; read -p "Do you want to autocomplete helm commands? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     echo "source <(helm completion zsh); compdef _helm helm" >> ~/.zshrc
   fi
@@ -136,7 +136,7 @@ OhMyZsh-Config () {
   fi
 
   # Kubectl
-  echo ""; read -p "Do you want to install kubectl plugin? [y/n]: " selectedOption
+  echo ""; read -p "Do you want to add kubectl alias and autocomplete? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     echo "source <(kubectl completion zsh); compdef _kubectl kubectl" >> ~/.zshrc
     echo "compdef __start_kubectl k" >> ~/.zshrc
@@ -154,38 +154,40 @@ OhMyZsh-Config () {
   fi
 
   # Minikube
-  echo ""; read -p "Do you want to install minikube plugin? [y/n]: " selectedOption
+  echo ""; read -p "Do you want to autocomplete minikube commands? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     echo "source <(minikube completion zsh); compdef _minikube minikube" >> ~/.zshrc
   fi
 
   # Oc
-  echo ""; read -p "Do you want to install oc plugin? [y/n]: " selectedOption
+  echo ""; read -p "Do you want to autocomplete oc commands? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     echo "source <(oc completion zsh); compdef _oc oc" >> ~/.zshrc
   fi
 
   # Tridentctl
-  echo ""; read -p "Do you want to autocomplete tridentctl command? [y/n]: " selectedOption
+  echo ""; read -p "Do you want to add tridentctl alias and autocomplete? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     echo "source <(tridentctl completion zsh); compdef _tridentctl tridentctl" >> ~/.zshrc
+    echo "compdef __start_tridentctl astra" >> ~/.zshrc
+    echo "alias astra=\"tridentctl -n trident\"" >> $aliasFile
   fi
 
-  # zsh-autosuggestions
+  # ZSH-Autosuggestions
   echo ""; read -p "Do you want to install zsh-autosuggestions plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
     plugins=$plugins" zsh-autosuggestions"
   fi
 
-  # zsh-completions
+  # ZSH-Completions
   echo ""; read -p "Do you want to install zsh-completions plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     git clone https://github.com/zsh-users/zsh-completions $ZSH_CUSTOM/plugins/zsh-completions
     plugins=$plugins" zsh-completions"
   fi
 
-  # zsh-syntax-highlighthing
+  # ZSH-Syntax-Highlighthing
   echo ""; read -p "Do you want to install zsh-syntax-highlighting plugin? [y/n]: " selectedOption
   if [ "$selectedOption" == "y" ]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
