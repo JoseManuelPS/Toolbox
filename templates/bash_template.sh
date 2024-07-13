@@ -23,34 +23,26 @@ srcPath=$scriptPath"src/"
 
 # Common strings.
 tab="--> "
-title="Loading $scriptName $scriptVersion...\n\n"
 
-# Package-manager.
-installerMedia="<(package_manager)>"
-
-# OR
-
-# Checking binary of Package-Manager.
-checkBinary=$(which apt | wc -l)
-if [ $(which apt | wc -l) -eq 1 ]; then
-  installerMedia="sudo apt"
+# Checking binary of package manager.
+if [ $(which apk | wc -l) -eq 1 ]; then
+  pkgManager="sudo apk add"
+  osFamily='Alpine'
+elif [ $(which apt | wc -l) -eq 1 ]; then
+  pkgManager="sudo apt install -y"
+  osFamily='Debian'
 elif [ $(which dnf | wc -l) -eq 1 ]; then
-  installerMedia="sudo dnf"
-elif [ $(which yum | wc -l) -eq 1 ]; then
-  installerMedia="sudo yum"
+  pkgManager="sudo dnf install -y"
+  osFamily='Fedora'
 fi
 
 # User information.
-if [ $(which logname | wc -l) -eq 1 ]; then
-  logUser=$(logname)
-  if ["$logUser" == "root"]; then
-    logUser_Home="/root/"
-  else
-    logUser_Home="/home/$logUser/"
-  fi
+if [ "$EUID" -eq 0 ]; then
+  execUser=$(echo -n $SUDO_USER)
+else
+  execUser=$(echo -n $USER)
 fi
-execUser=$(whoami)
-execUser_Home="$(echo $HOME)"
+execUser_Home=$(getent passwd $execUser | cut -d: -f6)"/"
 
 
 
@@ -61,7 +53,7 @@ execUser_Home="$(echo $HOME)"
 Main () {
 
   clear -x
-  echo -e $title
+  echo -e "Loading $scriptName $scriptVersion...\n\n"
 
   # Directory change to the directory where the script is executed.
   cd $scriptPath

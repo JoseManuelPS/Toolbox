@@ -67,26 +67,6 @@ _Last test info:_
 
 
 
-## oh-my-cfg/zsh - v1.5
-
-Script to install a custom zsh shell.
-
-Usage:
-```
-oh-my-custom-zsh.sh
-```
-
----
-
-_Last test info:_
-
-- _Date: 13/05/2023_
-- _ZSH: zsh:5.8.1_
-- _p10k: v1.18.0_
-
----
-
-
 
 ## random_wallpaper - v1.0
 
